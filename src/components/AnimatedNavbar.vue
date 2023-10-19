@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { setTransitionHooks } from 'vue';
+
 export default {
   data() {
     return {
@@ -37,16 +39,16 @@ export default {
   },
   computed: {
     menuStyles() {
-      console.log("here menu styles")
       return this.menuItems.map((item, idx) => {
-        console.log("here menu right", this.menuRight)
-        return {
+        const styles = {
           '--item-right': this.menuRight[idx] + 'px',
           '--item-top': idx * 50 + 'px',
-          height: '50px',
-          // width: itemWidth + 'px',
           backgroundColor: 'lightblue',
         };
+        if (this.totalMenuWidth >= this.windowWidth) {
+          styles['--item-width'] = this.windowWidth / this.numMenus + 'px'
+        }
+        return styles
       });
     },
   },
@@ -61,7 +63,6 @@ export default {
     },
     handleScroll(e) {
       this.windowTop = e.target.documentElement.scrollTop;
-      // console.log({ top: this.windowTop });
       // Check the scroll position
       if (window.scrollY > 0) {
         this.isScrolled = true;
@@ -81,26 +82,30 @@ export default {
     },
     getItemWidths() {
       this.numMenus = this.menuItems.length
-      console.log("here get item width", this.menuItems)
       this.menuItems.forEach((item, index) => {
         this.menuWidths[index] = this.getWidthOfContent(item.label)
       });
-      console.log("here got width 11", this.menuWidths, this.totalMenuWidth)
       this.adjustMenuWidth()
     },
     adjustMenuWidth() {
       this.totalMenuWidth = this.menuWidths.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
       let rightsum = 5 // Right default margin 5px
-
-      let margin = (this.windowWidth - this.totalMenuWidth - 5) / (this.numMenus - 1)
-      this.menuWidths.reverse().forEach((item, index) => {
-        this.menuRight[this.numMenus - index - 1] = rightsum
-        rightsum = rightsum + item + margin
-      })
+      if (this.totalMenuWidth >= this.windowWidth) {
+        this.menuRight = this.menuWidths.reverse().map((item, index) => {
+          return index * (this.windowWidth / this.numMenus)
+        }).reverse()
+      }
+      else {
+        let margin = (this.windowWidth - this.totalMenuWidth - 5) / (this.numMenus - 1)
+        this.menuWidths.reverse().forEach((item, index) => {
+          this.menuRight[this.numMenus - index - 1] = rightsum
+          rightsum = rightsum + item + margin
+        })
+      }
     },
   },
   created() {
-    this.updateWindowSize()
+    this.updateWindowSize();
     this.menuItems.forEach((item, idx) => {
       item.style = this.menuStyles[idx];
     })
@@ -152,7 +157,7 @@ export default {
   top: var(--item-top);
   right: 10px;
   transition: all 0.3s ease-in-out;
-
+  width: auto;
 }
 
 .nav-item.scrolled {
@@ -161,6 +166,7 @@ export default {
   right: var(--item-right);
   /* right: var(--window-width); */
   transition: all 0.3s ease-in-out;
+  width: var(--item-width);
 }
 
 /* Adjust spacing or other styles as needed */
