@@ -1,19 +1,22 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <AnimatedNavbar/>
+  <!-- <div id="app"> -->
+    <!-- <AnimatedNavbar/> -->
+    <router-view></router-view>
+  <!-- </div> -->
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import AnimatedNavbar from '@/components/AnimatedNavbar.vue';
+// import AnimatedNavbar from '@/components/AnimatedNavbar.vue';
 
 export default {
   name: 'App',
-  components: {
-    // HelloWorld
-    AnimatedNavbar
-  }
+  // components: {
+  //   // HelloWorld
+    // AnimatedNavbar
+  // }
 }
 </script>
 

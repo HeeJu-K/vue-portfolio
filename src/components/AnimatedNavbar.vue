@@ -1,19 +1,21 @@
 <template>
-  <nav class="navbar navbar-light bg-light fixed-top">
-    <ul class="navbar-nav" :class="{ 'navbar-expand': !isScrolled, 'navbar-collapse': isScrolled }">
-      <li v-for="item in menuItems" :key="item.id" ref="menuItemRef" class="nav-item"
-        :class="{ 'unscrolled': !isScrolled, 'scrolled': isScrolled }" :style="item.style">
-        <a class="nav-link" href="#">{{ item.label }}</a>
-      </li>
-    </ul>
-  </nav>
-  <div class="test">
-    HELLOO
+  <div>
+    <nav class="navbar navbar-light bg-light fixed-top">
+      <ul class="navbar-nav" :class="{ 'navbar-expand': !isScrolled, 'navbar-collapse': isScrolled }">
+        <li v-for="item in menuItems" :key="item.id" ref="menuItemRef" class="nav-item"
+          :class="{ 'unscrolled': !isScrolled, 'scrolled': isScrolled }" :style="item.style">
+          <router-link :to=item.route class="nav-link">{{ item.label }}</router-link>
+        </li>
+      </ul>
+    </nav>
+    <div class="test">
+      HELLOO
+
+    </div>
   </div>
 </template>
 
 <script>
-import { setTransitionHooks } from 'vue';
 
 export default {
   data() {
@@ -21,11 +23,11 @@ export default {
       isNavbarOpen: false,
       isScrolled: false,
       menuItems: [
-        { id: 0, label: 'Based at Seattle Sep. 24 19:19 Sun', style: null },
-        { id: 1, label: 'University of Washington / Tsinghua University', style: null },
-        { id: 2, label: 'emoji heejuk.dev@gmail.com', style: null },
-        { id: 3, label: 'Connect LinkedIn', style: null },
-        { id: 4, label: 'About me', style: null },
+        { id: 0, label: 'Based at Seattle Sep. 24 19:19 Sun', style: null, route: '/' },
+        { id: 1, label: 'University of Washington / Tsinghua University', style: null, route: '/education' },
+        { id: 2, label: 'emoji heejuk.dev@gmail.com', style: null, route: '/email' },
+        { id: 3, label: 'Connect LinkedIn', style: null, route: '/linkedin' },
+        { id: 4, label: 'About me', style: null, route: '/about' },
       ],
       numMenus: 0,
       menuWidths: [],
@@ -156,7 +158,7 @@ export default {
   margin-left: auto;
   top: var(--item-top);
   right: 10px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.8s ease-in-out;
   width: auto;
 }
 
@@ -165,7 +167,7 @@ export default {
   justify-content: space-between;
   right: var(--item-right);
   /* right: var(--window-width); */
-  transition: all 0.3s ease-in-out;
+  transition: all 0.8s ease-in-out;
   width: var(--item-width);
 }
 
