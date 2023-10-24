@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-light fixed-top">
       <ul class="navbar-nav" :class="{ 'navbar-expand': !isScrolled, 'navbar-collapse': isScrolled }">
         <li v-for="item in menuItems" :key="item.id" ref="menuItemRef" class="nav-item"
           :class="{ 'unscrolled': !isScrolled, 'scrolled': isScrolled }" :style="item.style">
@@ -8,10 +8,6 @@
         </li>
       </ul>
     </nav>
-    <div class="test">
-      HELLOO
-
-    </div>
   </div>
 </template>
 
@@ -24,10 +20,10 @@ export default {
       isScrolled: false,
       menuItems: [
         { id: 0, label: 'Based at Seattle Sep. 24 19:19 Sun', style: null, route: '/' },
-        { id: 1, label: 'University of Washington / Tsinghua University', style: null, route: '/education' },
-        { id: 2, label: 'emoji heejuk.dev@gmail.com', style: null, route: '/email' },
-        { id: 3, label: 'Connect LinkedIn', style: null, route: '/linkedin' },
-        { id: 4, label: 'About me', style: null, route: '/about' },
+        { id: 1, label: 'My Background', style: null, route: '/education' },
+        { id: 2, label: 'Experience', style: null, route: '/email' },
+        { id: 3, label: 'Contacts', style: null, route: '/linkedin' },
+        { id: 4, label: 'More About me', style: null, route: '/about' },
       ],
       numMenus: 0,
       menuWidths: [],
@@ -45,7 +41,6 @@ export default {
         const styles = {
           '--item-right': this.menuRight[idx] + 'px',
           '--item-top': idx * 50 + 'px',
-          backgroundColor: 'lightblue',
         };
         if (this.totalMenuWidth >= this.windowWidth) {
           styles['--item-width'] = this.windowWidth / this.numMenus + 'px'
@@ -125,11 +120,7 @@ export default {
 </script>
 
 <style scoped>
-.test {
-  height: 2000px;
-  background-color: black;
-  color: white;
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display');
 
 .navbar-expand {
   flex-direction: column;
@@ -147,8 +138,9 @@ export default {
 
 .nav-item {
   position: fixed;
-  background: blue;
+  border: 1px solid blue;
   padding: 1px;
+  font-family: 'DM Serif Display', serif;
 }
 
 .nav-item.unscrolled {
